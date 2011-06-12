@@ -28,7 +28,7 @@ class SluggableListener
 		return $em->getRepository(get_class($entity));
 	}
 
-	protected function generateUniqueSlug(SluggableInterface &$entity, EntityRepository $repository)
+	protected function generateUniqueSlug(SluggableInterface $entity, EntityRepository $repository)
 	{
 		if (!isset(self::$issuedSlugs[get_class($entity)])) self::$issuedSlugs[get_class($entity)] = array();
 
