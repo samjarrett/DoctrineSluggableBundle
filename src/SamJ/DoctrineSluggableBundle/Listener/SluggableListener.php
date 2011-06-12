@@ -8,7 +8,8 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
-class SluggableListener {
+class SluggableListener 
+{
 	protected static $issuedSlugs = array();
 
 	public function prePersist(LifecycleEventArgs $ea)
