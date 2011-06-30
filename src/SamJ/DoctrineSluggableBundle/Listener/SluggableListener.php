@@ -33,18 +33,18 @@ class SluggableListener
 		if (!isset(self::$issuedSlugs[get_class($entity)])) self::$issuedSlugs[get_class($entity)] = array();
 
 		$slug = is_array($entity->getSlugFields()) ? implode('-', $entity->getSlugFields()) : $entity->getSlugFields();
-    // replace non letter or digits by -
-    $slug = preg_replace('~[^\\pL\d]+~u', '-', $slug);
-    // trim
-    $slug = trim($slug, '-');
-    // transliterate
-    if(function_exists('iconv')):
-        $slug = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
-    endif;
-    // lowercase
-    $slug = strtolower($slug);
-    // remove unwanted characters
-    $slug = preg_replace('~[^-\w]+~', '', $slug);
+		// replace non letter or digits by -
+		$slug = preg_replace('~[^\\pL\d]+~u', '-', $slug);
+		// trim
+		$slug = trim($slug, '-');
+		// transliterate
+		if(function_exists('iconv')):
+				$slug = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
+		endif;
+		// lowercase
+		$slug = strtolower($slug);
+		// remove unwanted characters
+		$slug = preg_replace('~[^-\w]+~', '', $slug);
 		$loops = 0;
 		do
 		{
