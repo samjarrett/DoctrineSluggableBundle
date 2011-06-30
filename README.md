@@ -14,6 +14,10 @@ Add this inside ``deps`` file in root Symfony2 project :
 
     [DoctrineSluggableBundle]
         git=https://github.com/samjarrett/DoctrineSluggableBundle.git
+        
+Update your bundles versioned by git :
+
+    php bin/vendors install
     
 Then add this in ``app/AppKernel.php`` :
 
