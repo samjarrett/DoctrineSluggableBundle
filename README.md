@@ -16,9 +16,11 @@ Add this inside ``deps`` file in root Symfony2 project :
         git=https://github.com/samjarrett/DoctrineSluggableBundle.git
     
 Then add this in ``app/AppKernel.php`` :
+
     new SamJ\DoctrineSluggableBundle\SamJDoctrineSluggableBundle(),
   
 Finally, add this in ``app/autoload.php`` :
+
     'SamJ' => __DIR__.'/../vendor/DoctrineSluggableBundle/src',
   
 Example Entities
