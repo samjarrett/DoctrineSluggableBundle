@@ -3,9 +3,24 @@ DoctrineSluggableBundle
 
 This documentation is still under construction. However, an example is provided for any interested parties to begin experimenting with the package.
 
-### Contributor
+### Contributors
 * Sam Jarrett (samjarrett@me.com)
+* Denis Chartier (denis.chart+git@gmail.com)
 
+Installation
+------------
+
+Add this inside ``deps`` file in root Symfony2 project :
+
+  [DoctrineSluggableBundle]
+    git=https://github.com/samjarrett/DoctrineSluggableBundle.git
+    
+Then add this in ``app/AppKernel.php`` :
+  new SamJ\DoctrineSluggableBundle\SamJDoctrineSluggableBundle(),
+  
+Finally, add this in ``app/autoload.php`` :
+  'SamJ' => __DIR__.'/../vendor/DoctrineSluggableBundle/src',
+  
 Example Entities
 ----------------
 
