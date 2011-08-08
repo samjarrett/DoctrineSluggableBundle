@@ -35,7 +35,7 @@ class Slugger implements SluggerInterface {
 
 		// Translate
 		if (function_exists('iconv')) {
-			//$slug = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
+			$slug = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
 		}
 
 		// Lowercase
