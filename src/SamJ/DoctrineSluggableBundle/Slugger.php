@@ -50,7 +50,7 @@ class Slugger implements SluggerInterface {
 		// Append an index to the slug and see if we can generate a unique value
 		$loop = 1;
         $test = $slug;
-		while(in_array($test, $exclude)) $test = $slug . ($loop . '-' . ++$loop);
+		while(in_array($test, $exclude)) $test = $slug . ('-' . $loop++);
 		$slug = $test;
 
 		// We have our unique slug suggestion
