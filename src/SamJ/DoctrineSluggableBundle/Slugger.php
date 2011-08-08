@@ -35,7 +35,7 @@ class Slugger implements SluggerInterface {
 
 		// Translate
 		if (function_exists('iconv')) {
-			$slug = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
+			//$slug = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
 		}
 
 		// Lowercase
@@ -49,10 +49,8 @@ class Slugger implements SluggerInterface {
 
 		// Append an index to the slug and see if we can generate a unique value
 		$loop = 1;
-		do {
-			$test = $slug . ($loop > 1 ? '-' . $loop : '');
-			++$loop;
-		} while (in_array($test, $exclude));
+        $test = $slug;
+		while(in_array($test, $exclude)) $test = $slug . ($loop . '-' . ++$loop);
 		$slug = $test;
 
 		// We have our unique slug suggestion
