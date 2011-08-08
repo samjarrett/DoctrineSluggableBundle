@@ -11,32 +11,32 @@ use SamJ\DoctrineSluggableBundle\SluggerInterface;
  */
 class Slugger implements SluggerInterface {
 
-    /**
-     * Return a slug, ensuring it does not appear in exclude (prior collisions)
-     * @param $fields
-     * @param array $exclude list of slugs to exclude
-     * @return void
-     * Reference: Doctrine 1_4 slugify
-     */
-    public function getSlug($fields, $exclude = array())
-    {
-        // Determine if we are dealing with single-field or multiple-field slugs
-        if(is_array($fields)) {
-            $value = implode('-', $fields);
-        } else {
-            $value = $fields;
-        }
+	/**
+	 * Return a slug, ensuring it does not appear in exclude (prior collisions)
+	 * @param $fields
+	 * @param array $exclude list of slugs to exclude
+	 * @return void
+	 * Reference: Doctrine 1_4 slugify
+	 */
+	public function getSlug($fields, $exclude = array())
+	{
+		// Determine if we are dealing with single-field or multiple-field slugs
+		if (is_array($fields)) {
+			$value = implode('-', $fields);
+		} else {
+			$value = $fields;
+		}
 
-        // Treat the data (eliminate non-letter or digits by '-'
-        $slug = preg_replace('~[^\\pL\d]+~u', '-', $value);
+		// Treat the data (eliminate non-letter or digits by '-'
+		$slug = preg_replace('~[^\\pL\d]+~u', '-', $value);
 
-        // Clean up the slug
+		// Clean up the slug
 		$slug = trim($slug, '-');
 
 		// Translate
-		if(function_exists('iconv')) {
-            $slug = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
-        }
+		if (function_exists('iconv')) {
+			$slug = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
+		}
 
 		// Lowercase
 		$slug = strtolower($slug);
@@ -44,16 +44,18 @@ class Slugger implements SluggerInterface {
 		// Remove unwanted characters
 		$slug = preg_replace('~[^-\w]+~', '', $slug);
 
-        // Fall-back to produce something
-        if(!trim($slug)) $slug = 'n-a';
+		// Fall-back to produce something
+		if (!trim($slug)) $slug = 'n-a';
 
-        // Append an index to the slug and see if we can generate a unique value
-        $loop = 0;
-        do $test = $slug . ('-' . ++$loop);
-        while(in_array($test, $exclude));
-        $slug = $test;
+		// Append an index to the slug and see if we can generate a unique value
+		$loop = 1;
+		do {
+			$test = $slug . ($loop > 1 ? '-' . $loop : '');
+			++$loop;
+		} while (in_array($test, $exclude));
+		$slug = $test;
 
-        // We have our unique slug suggestion
-        return $slug;
-    }
+		// We have our unique slug suggestion
+		return $slug;
+	}
 }

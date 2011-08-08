@@ -48,7 +48,7 @@ class SluggableListener
      * @TODO: Remove the dependency on the field 'slug' on the entity (not in interface)
      * @TODO: Discuss whether the slug should auto-update if it is an 'update' (behaviour?)
      */
-	protected function generateUniqueSlug(SluggableInterface $entity, EntityRepository $repository)
+	public function generateUniqueSlug(SluggableInterface $entity, EntityRepository $repository)
 	{
 		// Find a slug
         $eliminated = array(); // Our prior eliminated slugs
@@ -61,7 +61,7 @@ class SluggableListener
             $result = $repository->findOneBy(array('slug' => $slug));
 
             // Check to see if we have found a slug that matches
-            if(!empty($result) && $result->getId() != $entity->getId()) {
+            if (!empty($result) && $result !== $entity) {
                 $eliminated[] = $slug;
             } else {
                 // We have found a slug for this element
