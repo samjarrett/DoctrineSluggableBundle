@@ -6,6 +6,7 @@ This documentation is still under construction. However, an example is provided 
 ### Contributors
 * Sam Jarrett (samjarrett@me.com)
 * Denis Chartier (denis.chart+git@gmail.com)
+* Cameron Manderson (cameronmanderson@gmail.com)
 
 Installation
 ------------
@@ -32,6 +33,7 @@ Example Entities
 
 ### Example 1
 In this example, the slug is built based on a single field:
+Note: Make sure you implement the accessor methods getId and getTitle
 
 #### Code
 	<?php
@@ -90,6 +92,7 @@ i.e.: an entity with a title of `Test Post` will have a slug of `test-post`.
 
 ### Example 2
 In this example, the slug is built based on multiple single fields:
+Note: Make sure you implement the accessor methods getId, getTitle and getAuthor
 
 #### Code
 	<?php
@@ -105,7 +108,7 @@ In this example, the slug is built based on multiple single fields:
 	 * @ORM\Entity
 	 * @ORM\Table
 	 */
-	class SingleFieldExample implements SluggableInterface {
+	class MultipleSingleFieldExample implements SluggableInterface {
 		/**
 		 * @ORM\Id
 		 * @ORM\Column(type="integer")
@@ -150,3 +153,7 @@ In this example, the slug is built based on multiple single fields:
 When the entity is persisted, the $slug field will be populated to be a 0-9, a-z only, with spaces converted to hyphens ("-"), based upon the author and title field.
 
 i.e.: an entity with a author of `Sam Jarrett` and a title of `Test Post` will have a slug of `sam-jarrett-test-post`.
+
+#### Further Notes
+This bundle uses a service called the "Slugger". You can implement your own slugger behaviour (such as dealing with specific field ordering etc) by implementing the SluggerInterface->getSlug($fields) method. Configure your service container to specific the class in the parameter "sluggable.slugger.class" in your service.xml.
+
