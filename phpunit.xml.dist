@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="./tests/bootstrap.php" colors="true">
+    <testsuites>
+        <testsuite name="DoctrineSluggable Test Suite">
+            <directory suffix="Test.php">./tests/DoctrineSluggable/Test/</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+    </php>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./src/SamJ/DoctrineSluggableBundle/</directory>
+        </whitelist>
+    </filter>
+</phpunit>
