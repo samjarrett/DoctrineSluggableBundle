@@ -1,6 +1,12 @@
 DoctrineSluggableBundle
 =======================
 
+The DoctrineSluggableBundle provides a neat implementation of sluggable behaviour for your entities.
+
+By having your entity implement the SluggableInterface interface your entities will automatically have slugs generated.
+
+You can also extend out how your slugs are presented by creating your own "Slugger" class, such as MySlugger, so you can generate some fancy variations for much neater and domain specific slugs. This is wired in using Symfony2's service container.
+
 This documentation is still under construction. However, an example is provided for any interested parties to begin experimenting with the package.
 
 ### Contributors
