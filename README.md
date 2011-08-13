@@ -13,6 +13,7 @@ This documentation is still under construction. However, an example is provided 
 * Sam Jarrett (samjarrett@me.com)
 * Denis Chartier (denis.chart+git@gmail.com)
 * Cameron Manderson (cameronmanderson@gmail.com)
+* Joskfg (joskfg@gmail.com)
 
 Installation
 ------------
