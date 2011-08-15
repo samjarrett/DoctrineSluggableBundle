@@ -62,8 +62,7 @@ class SluggableListener
             } else {
                 $foundSlug = true;
             }
-
-        } while ($foundSlug === false);
+        } while (false === $foundSlug);
 
         $entity->setSlug($slug);
     }

@@ -22,24 +22,17 @@ class Slugger implements SluggerInterface
             $fields = implode('-', $fields);
         }
 
-        // Treat the data (eliminate non-letter or digits by '-'
         $slug = preg_replace('~[^\\pL\d]+~u', '-', $fields);
-
-        // Clean up the slug
         $slug = trim($slug, '-');
 
-        // Translate
         if (function_exists('iconv')) {
             $slug = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
         }
 
-        // Lowercase
         $slug = strtolower($slug);
-
-        // Remove unwanted characters
         $slug = preg_replace('~[^-\w]+~', '', $slug);
 
-        // Fall-back to produce something
+        // Fall-back
         if (!trim($slug)) {
             $slug = 'n-a';
         }
