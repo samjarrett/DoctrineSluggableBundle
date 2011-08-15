@@ -1,6 +1,6 @@
 <?php
 
-namespace SamJ\DoctrineSluggableBundle;
+namespace SamJ\DoctrineSluggableBundle\Slug;
 
 interface SluggableInterface
 {

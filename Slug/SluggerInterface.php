@@ -1,5 +1,5 @@
 <?php
-namespace SamJ\DoctrineSluggableBundle;
+namespace SamJ\DoctrineSluggableBundle\Slug;
 
 /**
  * An interface for creating services that can generate a slug for a doctrine entity

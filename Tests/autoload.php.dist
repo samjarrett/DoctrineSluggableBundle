@@ -1,0 +1,14 @@
+<?php
+
+$vendor = __DIR__.'/../../../..';
+require_once $vendor.'/symfony/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+
+use Symfony\Component\ClassLoader\UniversalClassLoader;
+
+$loader = new UniversalClassLoader();
+$loader->registerNamespaces(array(
+    'Symfony'                => array($vendor.'/symfony/src', $vendor.'/bundles'),
+    'SamJ'                   => $vendor.'/bundles'
+));
+
+$loader->register();

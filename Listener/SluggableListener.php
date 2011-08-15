@@ -2,8 +2,8 @@
 
 namespace SamJ\DoctrineSluggableBundle\Listener;
 
-use SamJ\DoctrineSluggableBundle\SluggableInterface;
-use SamJ\DoctrineSluggableBundle\SluggerInterface;
+use SamJ\DoctrineSluggableBundle\Slug\SluggableInterface;
+use SamJ\DoctrineSluggableBundle\Slug\SluggerInterface;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\EntityManager;

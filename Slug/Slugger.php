@@ -1,7 +1,5 @@
 <?php
-namespace SamJ\DoctrineSluggableBundle;
-
-use SamJ\DoctrineSluggableBundle\SluggerInterface;
+namespace SamJ\DoctrineSluggableBundle\Slug;
 
 /**
  * Object Service that generates a slug based on incoming fields
