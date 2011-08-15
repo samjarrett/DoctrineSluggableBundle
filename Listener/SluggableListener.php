@@ -10,66 +10,61 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
 /**
- *
  * @TODO: Eliminate dependency on 'getId' from the entity from the interface
  */
-class SluggableListener 
+class SluggableListener
 {
     protected $slugger;
 
     /**
      * @param Slugger $slugger
      */
-    public function __construct(SluggerInterface $slugger) {
+    public function __construct(SluggerInterface $slugger)
+    {
         $this->slugger = $slugger;
     }
 
-	public function prePersist(LifecycleEventArgs $ea)
-	{
-		if ($ea->getEntity() instanceof SluggableInterface)
-		{
-			$entity = $ea->getEntity();
-			$repository = $this->getRepository($entity, $ea->getEntityManager());
+    public function prePersist(LifecycleEventArgs $ea)
+    {
+        if ($entity = $ea->getEntity() instanceof SluggableInterface) {
+            $repository = $this->getRepository($entity, $ea->getEntityManager());
 
-			$this->generateUniqueSlug($entity, $repository);
-		}
-	}
+            $this->generateUniqueSlug($entity, $repository);
+        }
+    }
 
-	protected function getRepository(SluggableInterface $entity, EntityManager $em)
-	{
-		return $em->getRepository(get_class($entity));
-	}
+    protected function getRepository(SluggableInterface $entity, EntityManager $em)
+    {
+        return $em->getRepository(get_class($entity));
+    }
 
     /**
-     * @param \SamJ\DoctrineSluggableBundle\SluggableInterface $entity
+     * @param \SamJ\DoctrineSluggableBundle\Slug\SluggableInterface $entity
      * @param \Doctrine\ORM\EntityRepository $repository
      * @return void
      *
      * @TODO: Remove the dependency on the field 'slug' on the entity (not in interface)
      * @TODO: Discuss whether the slug should auto-update if it is an 'update' (behaviour?)
      */
-	public function generateUniqueSlug(SluggableInterface $entity, EntityRepository $repository)
-	{
-		// Find a slug
+    public function generateUniqueSlug(SluggableInterface $entity, EntityRepository $repository)
+    {
+        // Find a slug
         $eliminated = array(); // Our prior eliminated slugs
         $foundSlug = false;
-		do {
-            // Obtain our slug
-            $slug = $this->slugger->getSlug($entity->getSlugFields(), $eliminated);
 
-            // See if it is in our collection
+        do {
+            $slug = $this->slugger->getSlug($entity->getSlugFields(), $eliminated);
             $result = $repository->findOneBy(array('slug' => $slug));
 
             // Check to see if we have found a slug that matches
             if (!empty($result) && $result !== $entity) {
                 $eliminated[] = $slug;
             } else {
-                // We have found a slug for this element
                 $foundSlug = true;
             }
-		} while ($foundSlug === false);
 
-        // Set the slug back to the entity
-		$entity->setSlug($slug);
-	}
+        } while ($foundSlug === false);
+
+        $entity->setSlug($slug);
+    }
 }
