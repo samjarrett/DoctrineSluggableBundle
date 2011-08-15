@@ -1,8 +1,8 @@
 <?php
 
-namespace DoctrineSluggable\Test;
+namespace SamJ\DoctrineSluggableBundle\Tests;
 
-use SamJ\DoctrineSluggableBundle\Slugger;
+use SamJ\DoctrineSluggableBundle\Slug\Slugger;
 
 class DefaultSluggerTest extends \PHPUnit_Framework_TestCase
 {
