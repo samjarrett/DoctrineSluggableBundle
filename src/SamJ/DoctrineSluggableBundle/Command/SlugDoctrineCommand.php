@@ -58,8 +58,7 @@ EOF
         $entityName = str_replace('/', '\\', $entityName);
 
         $reflectionClass = new \ReflectionClass($entityName);
-        if (!$reflectionClass->implementsInterface('SamJ\DoctrineSluggableBundle\SluggableInterface'))
-        {
+        if (!$reflectionClass->implementsInterface('SamJ\DoctrineSluggableBundle\SluggableInterface')) {
             throw new \InvalidArgumentException("Entity must implement 'SamJ\DoctrineSluggableBundle\SluggableInterface'");
         }
 
@@ -70,8 +69,7 @@ EOF
         $entityManager = $this->getEntityManager('default');
 
         $entities = $entityManager->getRepository($entityName)->findAll();
-        foreach ($entities as $entity)
-        {
+        foreach ($entities as $entity) {
             $entity->setSlug($slugger->getSlug($entity->getSlugFields()));
             $entityManager->persist($entity);
         }
