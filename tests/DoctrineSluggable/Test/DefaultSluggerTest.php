@@ -12,6 +12,7 @@ class DefaultSluggerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($slugger->getSlug('An Example'), 'an-example', 'Simple behaviour to replace whitespace and lowercase');
         $this->assertEquals($slugger->getSlug('AnExample'), 'anexample', 'Case insensitivity');
         $this->assertEquals($slugger->getSlug('The "Fancy-Example"'), 'the-fancy-example', 'First set of special characters');
+		$this->assertEquals($slugger->getSlug('A posessive person\'s nightmare'), 'a-posessive-persons-nightmare', 'Test apostrophe-s (\'s) slug creation');
     }
 
     public function testGetSlugExcludeList()

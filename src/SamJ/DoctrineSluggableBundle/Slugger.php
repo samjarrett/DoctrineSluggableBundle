@@ -22,13 +22,16 @@ class Slugger implements SluggerInterface {
 	{
 		// Determine if we are dealing with single-field or multiple-field slugs
 		if (is_array($fields)) {
-			$value = implode('-', $fields);
+			$slug = implode('-', $fields);
 		} else {
-			$value = $fields;
+			$slug = $fields;
 		}
 
+		// Add special treatment for 's i.e. "Sam's" becomes "Sams"
+		$slug = preg_replace('~\'s(\s|\z)~', 's$1', $slug);
+		
 		// Treat the data (eliminate non-letter or digits by '-'
-		$slug = preg_replace('~[^\\pL\d]+~u', '-', $value);
+		$slug = preg_replace('~[^\\pL\d]+~u', '-', $slug);
 
 		// Clean up the slug
 		$slug = trim($slug, '-');
