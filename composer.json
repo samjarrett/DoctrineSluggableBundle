@@ -1,0 +1,26 @@
+{
+	"name": "samj/doctrine-sluggable-bundle",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Sam Jarrett",
+			"email": "samjarrett@me.com"
+		},
+		{
+			"name": "Cameron Manderson",
+			"email": "cameronmanderson@gmail.com"
+		},
+		{
+			"name": "Denis Chartier",
+			"email": "denis.chart+git@gmail.com"
+		}
+	],
+	"require": {
+		"php": ">=5.3.2"
+	},
+	"autoload": {
+		"psr-0": {
+			"SamJ": "src/"
+		}
+	}
+}

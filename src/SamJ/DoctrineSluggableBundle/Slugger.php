@@ -1,4 +1,5 @@
 <?php
+
 namespace SamJ\DoctrineSluggableBundle;
 
 use SamJ\DoctrineSluggableBundle\SluggerInterface;
@@ -11,52 +12,52 @@ use SamJ\DoctrineSluggableBundle\SluggerInterface;
  */
 class Slugger implements SluggerInterface {
 
-	/**
-	 * Return a slug, ensuring it does not appear in exclude (prior collisions)
-	 * @param $fields
-	 * @param array $exclude list of slugs to exclude
-	 * @return void
-	 * Reference: Doctrine 1_4 slugify
-	 */
-	public function getSlug($fields, $exclude = array())
-	{
-		// Determine if we are dealing with single-field or multiple-field slugs
-		if (is_array($fields)) {
-			$slug = implode('-', $fields);
-		} else {
-			$slug = $fields;
-		}
+    /**
+     * Return a slug, ensuring it does not appear in exclude (prior collisions)
+     * @param $fields
+     * @param array $exclude list of slugs to exclude
+     * @return void
+     * Reference: Doctrine 1_4 slugify
+     */
+    public function getSlug($fields, $exclude = array())
+    {
+        // Determine if we are dealing with single-field or multiple-field slugs
+        if (is_array($fields)) {
+            $slug = implode('-', $fields);
+        } else {
+            $slug = $fields;
+        }
 
-		// Add special treatment for 's i.e. "Sam's" becomes "Sams"
-		$slug = preg_replace('~\'s(\s|\z)~', 's$1', $slug);
-		
-		// Treat the data (eliminate non-letter or digits by '-'
-		$slug = preg_replace('~[^\\pL\d]+~u', '-', $slug);
+        // Add special treatment for 's i.e. "Sam's" becomes "Sams"
+        $slug = preg_replace('~\'s(\s|\z)~', 's$1', $slug);
 
-		// Clean up the slug
-		$slug = trim($slug, '-');
+        // Treat the data (eliminate non-letter or digits by '-'
+        $slug = preg_replace('~[^\\pL\d]+~u', '-', $slug);
 
-		// Translate
-		if (function_exists('iconv')) {
-			$slug = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
-		}
+        // Clean up the slug
+        $slug = trim($slug, '-');
 
-		// Lowercase
-		$slug = strtolower($slug);
+        // Translate
+        if (function_exists('iconv')) {
+            $slug = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
+        }
 
-		// Remove unwanted characters
-		$slug = preg_replace('~[^-\w]+~', '', $slug);
+        // Lowercase
+        $slug = strtolower($slug);
 
-		// Fall-back to produce something
-		if (!trim($slug)) $slug = 'n-a';
+        // Remove unwanted characters
+        $slug = preg_replace('~[^-\w]+~', '', $slug);
 
-		// Append an index to the slug and see if we can generate a unique value
-		$loop = 1;
+        // Fall-back to produce something
+        if (!trim($slug)) $slug = 'n-a';
+
+        // Append an index to the slug and see if we can generate a unique value
+        $loop = 1;
         $test = $slug;
-		while(in_array($test, $exclude)) $test = $slug . ('-' . $loop++);
-		$slug = $test;
+        while(in_array($test, $exclude)) $test = $slug . ('-' . $loop++);
+        $slug = $test;
 
-		// We have our unique slug suggestion
-		return $slug;
-	}
+        // We have our unique slug suggestion
+        return $slug;
+    }
 }
