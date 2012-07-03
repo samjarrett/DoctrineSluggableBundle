@@ -12,52 +12,63 @@ use SamJ\DoctrineSluggableBundle\SluggerInterface;
  */
 class Slugger implements SluggerInterface {
 
-    /**
-     * Return a slug, ensuring it does not appear in exclude (prior collisions)
-     * @param $fields
-     * @param array $exclude list of slugs to exclude
-     * @return void
-     * Reference: Doctrine 1_4 slugify
-     */
-    public function getSlug($fields, $exclude = array())
-    {
-        // Determine if we are dealing with single-field or multiple-field slugs
-        if (is_array($fields)) {
-            $slug = implode('-', $fields);
-        } else {
-            $slug = $fields;
-        }
+	private $wordSeparator;
+	private $fieldSeparator;
 
-        // Add special treatment for 's i.e. "Sam's" becomes "Sams"
-        $slug = preg_replace('~\'s(\s|\z)~', 's$1', $slug);
+	public function __construct($wordSeparator, $fieldSeparator)
+	{
+		$this->wordSeparator = $wordSeparator;
+		$this->fieldSeparator = $fieldSeparator;
+	}
 
-        // Treat the data (eliminate non-letter or digits by '-'
-        $slug = preg_replace('~[^\\pL\d]+~u', '-', $slug);
+	/**
+	 * Return a slug, ensuring it does not appear in exclude (prior collisions)
+	 * @param $fields
+	 * @param array $exclude list of slugs to exclude
+	 * @return void
+	 * Reference: Doctrine 1_4 slugify
+	 */
+	public function getSlug($fields, $exclude = array())
+	{
+		// Determine if we are dealing with single-field or multiple-field slugs
+		if (!is_array($fields)) {
+			$fields = array($fields);
+		}
 
-        // Clean up the slug
-        $slug = trim($slug, '-');
+		foreach ($fields as &$field) {
+			// Add special treatment for 's i.e. "Sam's" becomes "Sams"
+			$field = preg_replace('~\'s(\s|\z)~', 's$1', $field);
 
-        // Translate
-        if (function_exists('iconv')) {
-            $slug = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
-        }
+			// Treat the data (eliminate non-letter or digits by '-'
+			$field = preg_replace('~[^\\pL\d]+~u', $this->wordSeparator, $field);
 
-        // Lowercase
-        $slug = strtolower($slug);
+			// Clean up the slug
+			$field = trim($field, $this->wordSeparator);
 
-        // Remove unwanted characters
-        $slug = preg_replace('~[^-\w]+~', '', $slug);
+			// Translate
+			if (function_exists('iconv')) {
+				$field = iconv('utf-8', 'us-ascii//TRANSLIT', $field);
+			}
 
-        // Fall-back to produce something
-        if (!trim($slug)) $slug = 'n-a';
+			// Lowercase
+			$field = strtolower($field);
 
-        // Append an index to the slug and see if we can generate a unique value
-        $loop = 1;
-        $test = $slug;
-        while(in_array($test, $exclude)) $test = $slug . ('-' . $loop++);
-        $slug = $test;
+			// Remove unwanted characters
+			$field = preg_replace('~[^-\w]+~', '', $field);
+		}
 
-        // We have our unique slug suggestion
-        return $slug;
-    }
+		$slug = implode($this->fieldSeparator, $fields);
+
+		// Fall-back to produce something
+		if (!trim($slug)) $slug = 'n-a';
+
+		// Append an index to the slug and see if we can generate a unique value
+		$loop = 1;
+		$test = $slug;
+		while(in_array($test, $exclude)) $test = $slug . ('-' . $loop++);
+		$slug = $test;
+
+		// We have our unique slug suggestion
+		return $slug;
+	}
 }
