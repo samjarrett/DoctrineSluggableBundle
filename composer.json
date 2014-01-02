@@ -22,5 +22,10 @@
 		"psr-0": {
 			"SamJ": "src/"
 		}
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "2.4.x-dev"
+		}
 	}
 }
