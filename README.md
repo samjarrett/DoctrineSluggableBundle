@@ -23,22 +23,14 @@ This documentation is still under construction. However, an example is provided 
 Installation
 ------------
 
-Add this inside ``deps`` file in root Symfony2 project :
+Simply run assuming you have installed composer.phar or composer binary :
 
-    [DoctrineSluggableBundle]
-        git=https://github.com/samjarrett/DoctrineSluggableBundle.git
-        
-Update your bundles versioned by git :
+    $ php composer.phar require samj/doctrine-sluggable-bundle 2.0
 
-    php bin/vendors install
-    
 Then add this in ``app/AppKernel.php`` :
 
     new SamJ\DoctrineSluggableBundle\SamJDoctrineSluggableBundle(),
-  
-Finally, add this in ``app/autoload.php`` :
 
-    'SamJ' => __DIR__.'/../vendor/DoctrineSluggableBundle/src',
   
 Example Entities
 ----------------
