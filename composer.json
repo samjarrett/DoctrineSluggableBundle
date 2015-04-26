@@ -1,5 +1,6 @@
 {
 	"name": "samj/doctrine-sluggable-bundle",
+	"description": "Implementation for Doctrine2 sluggable behaviour for Symfony entities",
 	"license": "MIT",
 	"authors": [
 		{
